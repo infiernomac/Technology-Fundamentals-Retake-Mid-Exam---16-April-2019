@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Easter_Shopping
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			List<string> shops = Console.ReadLine().Split().ToList();
+			int numberCommands = int.Parse(Console.ReadLine());
+
+			for (int i = 0; i < numberCommands; i++)
+			{
+
+				string[] imput = Console.ReadLine().Split().ToArray();
+
+				if (imput[0].Equals("Include"))
+				{
+					shops.Add(imput[1]);
+				}
+				else if (imput[0].Equals("Visit"))
+				{
+					int number = int.Parse(imput[2]);
+
+					if (number >= 0 && number <= shops.Count)
+					{
+						if (imput[1].Equals("first"))
+						{
+							for (int a = 0; a < number; a++)
+							{
+								shops.RemoveAt(0);
+							}
+						}
+						else
+						{
+							for (int a = number; a > 0; a--)
+							{
+								shops.RemoveAt(shops.Count - 1);
+							}
+						}
+					}
+				}
+				else if (imput[0].Equals("Prefer"))
+				{
+					int shopIndexOne = int.Parse(imput[1]);
+					int shopIndexTwo = int.Parse(imput[2]);
+
+					if (shopIndexOne >= 0 && shopIndexOne < shops.Count && shopIndexTwo >= 0 && shopIndexTwo < shops.Count )
+					{
+						string preferShop = shops[shopIndexTwo];
+						shops[shopIndexTwo] = shops[shopIndexOne];
+						shops[shopIndexOne] = preferShop;
+					}
+				}
+				else
+				{
+					int shopIndex = int.Parse(imput[2]);
+
+					if (shopIndex >= 0 && shopIndex < shops.Count && shops.Count > 0)
+					{
+						shops.Insert(shopIndex + 1, imput[1]);
+					}
+				}
+			}
+
+			Console.WriteLine("Shops left:");
+			Console.WriteLine(string.Join(" ", shops));
+		}
+	}
+}
